@@ -1,0 +1,5 @@
+.TextEditor {
+  border: 2px solid rgba(0, 0, 0, .1);
+  height: 100%;
+  width: 50%;
+}
