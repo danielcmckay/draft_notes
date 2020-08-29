@@ -3,6 +3,7 @@
   flex-flow: column;
   justify-content: flex-start;
   align-items: center;
+  font-family: 'Crimson Text', serif;
 }
 
 .AppContainer {

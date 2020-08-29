@@ -1,5 +1,42 @@
 .TextEditor {
-  border: 2px solid rgba(0, 0, 0, .1);
+  /* border: 3px solid rgba(0, 0, 0, .02); */
   height: 100%;
+  width: 80%;
+}
+
+.TextField {
+  width: 90%;
+  margin: auto;
+  border: none;
+  outline: none;
+  height: 90%;
+  margin-top: 15px;
+  padding: 15px 20px;
+  resize: none;
+  font-size: 1.3rem;
+  font-family: 'Crimson Text', serif;
+}
+
+.TextOptionsContainer {
+  margin-top: 15px;
+}
+
+.TextOptions {
   width: 50%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.TextOption {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, .2);
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
 }

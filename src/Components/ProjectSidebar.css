@@ -1,7 +1,29 @@
 .ProjectSidebar {
-  border: 2px solid rgba(0, 0, 0, .1);
+  /* border: 3px solid rgba(0, 0, 0, .05); */
   height: 100%;
   width: 25%;
   transition: width .2s ease-in;
+}
 
+.ProjectSidebar i {
+  position: absolute;
+  top: 50%;
+  left: 18%;
+  font-size: 2.5rem;
+  color:rgba(0, 0, 0, .5);
+}
+
+.ProjectsContainer {
+  padding-left: 15px;
+  text-align: left;
+}
+
+.ProjectsContainer ul {
+  padding: 0;
+}
+
+.Project {
+  list-style: none;
+  padding-left: 15px;
+  margin-bottom: 10px;
 }
