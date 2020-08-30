@@ -16,7 +16,7 @@ function NotesSidebar() {
   return (
     <div className="NotesSidebar" style={{ width: sidebarOpen ? "25%" : "2%" }}>
       <div onClick={toggleHandler}>
-        <i className="fas fa-arrow-circle-right"></i>
+        <i className={sidebarOpen ? "fas fa-arrow-circle-right" : "fas fa-arrow-circle-left"}></i>
       </div>
       <div className="NotesListContainer" style={{visibility: sidebarOpen ? "visible" : "hidden"}}>
         {notesList.map((note) => (
