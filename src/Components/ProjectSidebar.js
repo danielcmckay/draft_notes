@@ -59,7 +59,7 @@ function ProjectSidebar() {
             value={formVal}
             onChange={formValHandler}
           />
-          <i className="fas fa-plus-circle" onClick={newProjectHandler}></i>
+          <i className="fas fa-plus" onClick={newProjectHandler}></i>
         </form>
 
         {projects.map((proj) => (

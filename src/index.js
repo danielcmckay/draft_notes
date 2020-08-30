@@ -6,10 +6,13 @@ import * as serviceWorker from "./serviceWorker";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );

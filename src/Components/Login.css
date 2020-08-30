@@ -1,0 +1,64 @@
+.Login {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  width: 65%;
+  margin: auto;
+}
+
+.LoginTitle {
+  font-size: 5rem;
+}
+
+.LoginSubhead {
+  font-size: 1.5rem;
+  text-align: left;
+}
+
+.LoginForm {
+  width: 50%;
+  margin: auto;
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 150px;
+}
+
+.LoginForm span {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.LoginLabel {
+  text-align: left;
+  margin-right: 15px;
+  width: 65px;
+}
+
+.LoginInput {
+  border: none;
+  border-bottom: 1px solid #333;
+  width: 275px;
+}
+
+.LoginInput:focus {
+  outline: none;
+
+}
+
+.LoginBtn {
+  background: #333;
+  color: #fff;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  font-family: 'Crimson Text', serif;
+  width: 150px;
+  margin: auto;
+}
