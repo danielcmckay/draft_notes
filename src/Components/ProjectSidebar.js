@@ -1,18 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
+import axios from 'axios';
 import "./ProjectSidebar.css";
 
 function ProjectSidebar() {
   const [sidebarOpen, toggleSidebarOpen] = useState(true);
   const [formVal, setFormVal] = useState('');
-  const [projects, setProjects] = useState([
-    {
-      name: "Novel",
-      text:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro labore exercitationem quis, expedita dolorum autem repellendus, consectetur corporis doloribus fugiat voluptatem aut. Sint quaerat iste impedit exercitationem deserunt? Consequuntur explicabo odio non quam dolorum exercitationem laboriosam excepturi nihil placeat harum est maiores eos vero, soluta laudantium illum magni? Dolores, illum.",
-    },
-    { name: "Notes", text: "Lesson 1: These are my notes" },
-    { name: "Recipes", text: "Orange Chicken:\n Ingredients: stuff" },
-  ]);
+  const [projects, setProjects] = useState([]);
+
+  
 
   const toggleHandler = (e) => {
     toggleSidebarOpen(!sidebarOpen);
@@ -27,7 +22,43 @@ function ProjectSidebar() {
     let projectsArr = [...projects];
     projectsArr.push({name: formVal, text: ''});
     setProjects(projectsArr);
+    addProjectToDb(formVal)
   };
+
+  const getProjectsFromDb = () => {
+    let dbProjects = [];
+    try {
+      axios.get("http://localhost:5000/projects/")
+        .then(res => {
+          setProjects(res.data)
+        })
+        .then(console.log("dbProjects = " + dbProjects))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const addProjectToDb = (name) => {
+    let newProj = {
+      name: name
+    }
+
+    try {
+      axios.post('http://localhost:5000/projects/new/', {newProj})
+        .then(res => {
+          console.log(res)
+          console.log(res.data)
+        })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getProjectsFromDb();
+    console.log("Use effects running: " + projects) 
+  }, []);
+
 
   return (
     <div
@@ -48,9 +79,6 @@ function ProjectSidebar() {
         className="ProjectsContainer"
         style={{ visibility: sidebarOpen ? "visible" : "hidden" }}
       >
-        <span>
-          <ul className="ProjectsList">Projects:</ul>
-        </span>
         <form onSubmit={newProjectHandler}>
           <input
             type="text"
@@ -61,10 +89,11 @@ function ProjectSidebar() {
           />
           <i className="fas fa-plus" onClick={newProjectHandler}></i>
         </form>
-
+        <span>
+          <ul className="ProjectsList">Projects:</ul>
+        </span>
         {projects.map((proj) => (
-          <li className="Project">{proj.name}</li>
-        ))}
+          <li className="Project" key={proj.projectId}>{proj.name}</li>))}
       </div>
     </div>
   );

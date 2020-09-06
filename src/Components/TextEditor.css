@@ -35,11 +35,16 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  border: 3px solid rgba(0, 0, 0, .3);
+  background: rgba(0,0,0,.2);
+  color: #fff;
   height: 30px;
   width: 30px;
   border-radius: 50%;
-  color: #333;
+  cursor: pointer;
+}
+
+.TextOption:hover {
+  background: rgba(0,0,0,.4);
 }
 
 .TextOption span {
