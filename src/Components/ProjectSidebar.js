@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 import "./ProjectSidebar.css";
+import Project from "./Project";
 
 function ProjectSidebar() {
   const [sidebarOpen, toggleSidebarOpen] = useState(true);
-  const [formVal, setFormVal] = useState('');
+  const [formVal, setFormVal] = useState("");
   const [projects, setProjects] = useState([]);
-
-  
 
   const toggleHandler = (e) => {
     toggleSidebarOpen(!sidebarOpen);
@@ -15,50 +14,55 @@ function ProjectSidebar() {
 
   const formValHandler = (e) => {
     setFormVal(e.target.value);
-  }
+  };
 
   const newProjectHandler = (e) => {
     e.preventDefault();
     let projectsArr = [...projects];
-    projectsArr.push({name: formVal, text: ''});
+    projectsArr.push({ name: formVal, text: "" });
     setProjects(projectsArr);
-    addProjectToDb(formVal)
+    addProjectToDb(formVal);
   };
 
   const getProjectsFromDb = () => {
     let dbProjects = [];
     try {
-      axios.get("http://localhost:5000/projects/")
-        .then(res => {
-          setProjects(res.data)
+      axios
+        .get("http://localhost:5000/projects/")
+        .then((res) => {
+          setProjects(res.data);
         })
-        .then(console.log("dbProjects = " + dbProjects))
+        .then(console.log("dbProjects = " + dbProjects));
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const addProjectToDb = (name) => {
     let newProj = {
-      name: name
-    }
+      name: name,
+    };
 
-    try {
-      axios.post('http://localhost:5000/projects/new/', {newProj})
-        .then(res => {
-          console.log(res)
-          console.log(res.data)
-        })
-    } catch (error) {
-      console.log(error)
+    if (name !== "" || name !== undefined || name !== null) {
+      try {
+        axios
+          .post("http://localhost:5000/projects/new/", { newProj })
+          .then((res) => {
+            console.log(res);
+            console.log(res.data);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      alert("You must fill in a new project name!");
     }
-  }
+  };
 
   useEffect(() => {
     getProjectsFromDb();
-    console.log("Use effects running: " + projects) 
+    console.log("Use effects running: " + projects);
   }, []);
-
 
   return (
     <div
@@ -79,8 +83,12 @@ function ProjectSidebar() {
         className="ProjectsContainer"
         style={{ visibility: sidebarOpen ? "visible" : "hidden" }}
       >
+        <span>
+          <ul className="ProjectsList">Projects:</ul>
+        </span>
         <form onSubmit={newProjectHandler}>
           <input
+            className="NewProject"
             type="text"
             name="newProject"
             id="newProject"
@@ -89,11 +97,15 @@ function ProjectSidebar() {
           />
           <i className="fas fa-plus" onClick={newProjectHandler}></i>
         </form>
-        <span>
-          <ul className="ProjectsList">Projects:</ul>
-        </span>
+        <div>
         {projects.map((proj) => (
-          <li className="Project" key={proj.projectId}>{proj.name}</li>))}
+          <Project
+            name={proj.name}
+            documents={proj.documents}
+            projectId={proj.projectId}
+          />
+        ))}
+        </div>
       </div>
     </div>
   );

@@ -35,3 +35,21 @@
   padding-left: 15px;
   margin-bottom: 10px;
 }
+
+.ProjectsList {
+  font-size: 2rem;
+}
+
+.NewProject {
+  margin-top: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-bottom: 1px solid #333;
+  margin-right: 10px;
+}
+
+.chevron {
+  margin-right: 5px;
+  font-size: .7rem;
+  transition: all .6s ease-in;
+}
