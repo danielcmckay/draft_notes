@@ -17,13 +17,14 @@
 }
 
 .LoginForm {
-  width: 50%;
+  width: 65%;
+  height: 50%;
   margin: auto;
   display: flex;
   flex-flow: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  margin-top: 150px;
+  margin-top: 100px;
 }
 
 .LoginForm span {
@@ -36,18 +37,17 @@
 .LoginLabel {
   text-align: left;
   margin-right: 15px;
-  width: 65px;
+  width: 85px;
 }
 
 .LoginInput {
   border: none;
   border-bottom: 1px solid #333;
-  width: 275px;
+  width: 250px;
 }
 
 .LoginInput:focus {
   outline: none;
-
 }
 
 .BtnSpan {
@@ -57,6 +57,8 @@
   justify-content: space-between;
   width: 80%;
   margin: auto;
+  margin-top: 50px;
+
 }
 
 .Btn {

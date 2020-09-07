@@ -10,7 +10,7 @@ import { Route, Switch } from "react-router-dom";
 
 const App = () => {
   const [loginStatus, setLoginStatus] = useState(false);
-
+  
 
   return (
     <div className="App">

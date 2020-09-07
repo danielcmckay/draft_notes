@@ -5,9 +5,7 @@ function Project(props) {
   const [chevron, toggleChevron] = useState(false);
 
   useEffect(() => {
-    if (props.documents === undefined || props.documents.length === 0) {
-      props.documents.push({name: "Untitled", dateCreated: new Date().toUTCString, words: 0, creatorId: 1, projectId: props.projectId, text: ''})
-    }
+    
   }, [])
 
   

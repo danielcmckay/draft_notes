@@ -56,17 +56,6 @@ function Login(props) {
         A minimalistic text editor for distraction-free creativity.
       </p>
       <form className="LoginForm">
-        <span>
-          <label htmlFor="email" className="LoginLabel">
-            Email
-          </label>
-          <input
-            name="email"
-            type="email"
-            className="LoginInput"
-            onChange={onChangeHandler}
-          />
-        </span>
         {!loginMode && (
           <>
             <span>
@@ -93,6 +82,17 @@ function Login(props) {
             </span>
           </>
         )}
+        <span>
+          <label htmlFor="email" className="LoginLabel">
+            Email
+          </label>
+          <input
+            name="email"
+            type="email"
+            className="LoginInput"
+            onChange={onChangeHandler}
+          />
+        </span>
         <span>
           <label htmlFor="password" className="LoginLabel">
             Password

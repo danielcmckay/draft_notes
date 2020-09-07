@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./ProjectSidebar.css";
 import Project from "./Project";
