@@ -3,10 +3,9 @@ import axios from "axios";
 import "./ProjectSidebar.css";
 import Project from "./Project";
 
-function ProjectSidebar() {
+function ProjectSidebar(props) {
   const [sidebarOpen, toggleSidebarOpen] = useState(true);
   const [formVal, setFormVal] = useState("");
-  const [projects, setProjects] = useState([]);
 
   const toggleHandler = (e) => {
     toggleSidebarOpen(!sidebarOpen);
@@ -16,53 +15,14 @@ function ProjectSidebar() {
     setFormVal(e.target.value);
   };
 
-  const newProjectHandler = (e) => {
-    e.preventDefault();
-    let projectsArr = [...projects];
-    projectsArr.push({ name: formVal, text: "" });
-    setProjects(projectsArr);
-    addProjectToDb(formVal);
-  };
+  
+  const newProjClickHandler = () => {
+    props.addProjectToDb(formVal);
+  }
 
-  const getProjectsFromDb = () => {
-    let dbProjects = [];
-    try {
-      axios
-        .get("http://localhost:5000/projects/")
-        .then((res) => {
-          setProjects(res.data);
-        })
-        .then(console.log("dbProjects = " + dbProjects));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const addProjectToDb = (name) => {
-    let newProj = {
-      name: name,
-    };
-
-    if (name !== "" || name !== undefined || name !== null) {
-      try {
-        axios
-          .post("http://localhost:5000/projects/new/", { newProj })
-          .then((res) => {
-            console.log(res);
-            console.log(res.data);
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      alert("You must fill in a new project name!");
-    }
-  };
-
-  useEffect(() => {
-    getProjectsFromDb();
-    console.log("Use effects running: " + projects);
-  }, []);
+  const addNewDocument = (newDoc) => {
+    props.documents.push(...newDoc)
+  }
 
   return (
     <div
@@ -86,7 +46,7 @@ function ProjectSidebar() {
         <span>
           <ul className="ProjectsList">Projects:</ul>
         </span>
-        <form onSubmit={newProjectHandler}>
+        <form onSubmit={newProjClickHandler}>
           <input
             className="NewProject"
             type="text"
@@ -95,14 +55,15 @@ function ProjectSidebar() {
             value={formVal}
             onChange={formValHandler}
           />
-          <i className="fas fa-plus" onClick={newProjectHandler}></i>
+          <i className="fas fa-plus" onClick={newProjClickHandler}></i>
         </form>
         <div>
-        {projects.map((proj) => (
+        {props.projects.map((proj) => (
           <Project
             name={proj.name}
             documents={proj.documents}
             projectId={proj.projectId}
+            addNewDocument={addNewDocument}
           />
         ))}
         </div>
