@@ -7,11 +7,14 @@ import NotesSidebar from "./Components/NotesSidebar";
 import NavBar from "./Components/NavBar";
 import Login from "./Components/Login";
 import { Route, Switch } from "react-router-dom";
+import { AuthContext } from "./context/AuthContext";
+import useAuth from './hooks/auth-hook';
 
 
 const App = () => {
   const [loginStatus, setLoginStatus] = useState(false);
   const [projects, setProjects] = useState([]);
+  const {userId, login, logout} = useAuth();
 
   const newProjectHandler = (project) => {
     // let projectsArr = [...projects];
@@ -62,6 +65,11 @@ const App = () => {
 
   return (
     <div className="App">
+      <AuthContext.Provider
+        value={{isLoggedIn: loginStatus,
+        login: login,
+        logout: logout,
+        userId: userId}}>
       <Switch>
         {!loginStatus ? (
           <Login setLoginStatus={setLoginStatus}/>
@@ -77,6 +85,7 @@ const App = () => {
           </>
         )}
       </Switch>
+      </AuthContext.Provider>
     </div>
   );
 };

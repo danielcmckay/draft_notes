@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import "./Login.css";
-import AuthContext from "../context/AuthContext";
+import {AuthContext} from "../context/AuthContext";
 import axios from "axios";
 
 function Login(props) {
@@ -35,7 +35,7 @@ function Login(props) {
     if (loginMode) {
       try {
         axios.post("http://localhost:5000/auth/login", user)
-          .then(res => console.log(res.data))
+          .then(res => auth.login(res.data))
         props.setLoginStatus(true);
       } catch (error) {
         alert(error);
@@ -43,7 +43,7 @@ function Login(props) {
     } else {
       try {
         axios.post("http://localhost:5000/auth/signup", user)
-          .then(res => console.log(res.data))
+          .then(res => auth.login(res.data))
         props.setLoginStatus(true);
       } catch (error) {
         alert(error);
