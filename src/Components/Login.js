@@ -34,14 +34,16 @@ function Login(props) {
   const onSubmitHandler = () => {
     if (loginMode) {
       try {
-        axios.post("http://localhost:5000/auth/login", user);
+        axios.post("http://localhost:5000/auth/login", user)
+          .then(res => console.log(res.data))
         props.setLoginStatus(true);
       } catch (error) {
         alert(error);
       }
     } else {
       try {
-        axios.post("http://localhost:5000/auth/signup", user);
+        axios.post("http://localhost:5000/auth/signup", user)
+          .then(res => console.log(res.data))
         props.setLoginStatus(true);
       } catch (error) {
         alert(error);
