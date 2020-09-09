@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from 'axios';
 import "./Project.css";
+import {AuthContext} from '../context/AuthContext';
 
 function Project(props) {
   const [chevron, toggleChevron] = useState(false);
   const [addingDocument, toggleAddingDocument] = useState(false);
+  const auth = useContext(AuthContext);
   const [newDocument, setNewDocument] = useState({
     name: '',
     words: 0,
     projectId: props.projectId,
+    creatorId: auth.userId,
     text: ''
   });
 

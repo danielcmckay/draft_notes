@@ -16,7 +16,8 @@ function ProjectSidebar(props) {
   };
 
   
-  const newProjClickHandler = () => {
+  const newProjClickHandler = (e) => {
+    e.preventDefault();
     props.addProjectToDb(formVal);
   }
 

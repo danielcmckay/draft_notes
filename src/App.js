@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from 'axios';
 import "./App.css";
 import ProjectSidebar from "./Components/ProjectSidebar";
@@ -17,19 +17,20 @@ const App = () => {
   const {userId, login, logout} = useAuth();
 
   const newProjectHandler = (project) => {
-    // let projectsArr = [...projects];
-    // projectsArr.push({ name: formVal, text: "" });
-    // setProjects(projectsArr);
     addProjectToDb(project);
   };
+
+  useEffect(() => {
+    console.log(userId)
+  })
 
   const getProjectsFromDb = () => {
     let dbProjects = [];
     try {
       axios
-        .get("http://localhost:5000/projects/")
+        .get(`http://localhost:5000/projects/${userId}`, {userId})
         .then((res) => {
-          setProjects(res.data);
+          setProjects(res.data)
         })
         .then(console.log("dbProjects = " + dbProjects));
     } catch (error) {
@@ -40,6 +41,7 @@ const App = () => {
   const addProjectToDb = (name) => {
     let newProj = {
       name: name,
+      creatorId: userId
     };
 
     if (name !== "" || name !== undefined || name !== null) {
@@ -56,20 +58,26 @@ const App = () => {
     } else {
       alert("You must fill in a new project name!");
     }
+    getProjectsFromDb();
   };
 
   useEffect(() => {
-    getProjectsFromDb();
-    console.log("Use effects running: " + projects);
-  }, []);
+    if (userId != null) {
+      getProjectsFromDb();
+    }
+  }, [userId]);
 
   return (
-    <div className="App">
       <AuthContext.Provider
-        value={{isLoggedIn: loginStatus,
-        login: login,
-        logout: logout,
-        userId: userId}}>
+        value={{
+          isLoggedIn: loginStatus,
+          login: login,
+          logout: logout,
+          userId: userId
+      }}
+        >
+      <div className="App">
+
       <Switch>
         {!loginStatus ? (
           <Login setLoginStatus={setLoginStatus}/>
@@ -85,8 +93,9 @@ const App = () => {
           </>
         )}
       </Switch>
+      </div>
       </AuthContext.Provider>
-    </div>
+   
   );
 };
 
