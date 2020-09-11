@@ -25,16 +25,18 @@ const App = () => {
   })
 
   const getProjectsFromDb = () => {
-    let dbProjects = [];
-    try {
-      axios
-        .get(`http://localhost:5000/projects/${userId}`, {userId})
-        .then((res) => {
-          setProjects(res.data)
-        })
-        .then(console.log("dbProjects = " + dbProjects));
-    } catch (error) {
-      console.log(error);
+    if (loginStatus) {
+      let dbProjects = [];
+      try {
+        axios
+          .get(`http://localhost:5000/projects/${userId}`, {userId})
+          .then((res) => {
+            setProjects(res.data)
+          })
+          .then(console.log("dbProjects = " + dbProjects));
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -49,7 +51,6 @@ const App = () => {
         axios
           .post("http://localhost:5000/projects/new/", { newProj })
           .then((res) => {
-            console.log(res);
             console.log(res.data);
           });
       } catch (error) {
@@ -60,6 +61,7 @@ const App = () => {
     }
     getProjectsFromDb();
   };
+
 
   useEffect(() => {
     if (userId != null) {
