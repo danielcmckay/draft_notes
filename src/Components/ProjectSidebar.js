@@ -31,6 +31,8 @@ function ProjectSidebar(props) {
     props.documents.push(...newDoc)
   }
 
+ 
+
   return (
     <div
       className="ProjectSidebar"
@@ -71,6 +73,7 @@ function ProjectSidebar(props) {
             documents={proj.documents}
             projectId={proj.projectId}
             addNewDocument={addNewDocument}
+            populateText={props.populateText}
           />
         ))}
         </div>

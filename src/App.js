@@ -18,10 +18,16 @@ const App = () => {
   const [loginStatus, setLoginStatus] = useState(false);
   const {projects, getProjects, addProjects} = useDatabase();
   const {userId, login, logout} = useAuth();
+  const [selectedDocument, setSelectedDocument] = useState(0)
 
   const newProjectHandler = (project, userId) => {
     addProjects(project, userId);
   };
+
+  const populateTextHandler = (item) => {
+    console.log(item)
+    setSelectedDocument(...item)
+  }
 
   useEffect(() => {
       if (userId != null) {
@@ -55,8 +61,8 @@ const App = () => {
             <NavBar />
 
             <div className="AppContainer">
-              <ProjectSidebar projects={projects} addProjects={addProjects}/>
-              <TextEditor />
+              <ProjectSidebar projects={projects} addProjects={addProjects} populateText={populateTextHandler}/>
+              <TextEditor selectedDocument={selectedDocument}/>
               <NotesSidebar />
             </div>
             </DatabaseContext.Provider>

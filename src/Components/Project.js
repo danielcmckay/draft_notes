@@ -43,6 +43,12 @@ function Project(props) {
       .catch((err) => console.log(err));
   };
 
+  const documentHandler = e => {
+      console.log(e.target.innerText)
+      const targetDoc = props.documents.filter((doc) => doc.name === e.target.innerText)
+      props.populateText(targetDoc)
+  }
+
   return (
     <div>
       <p className="Project" key={props.projectId}>
@@ -65,7 +71,7 @@ function Project(props) {
         )}
         {chevron &&
           props.documents.map((doc) => (
-            <li className="DocumentTitle">{doc.name}</li>
+            <li className="DocumentTitle" key={doc.docId} onClick={documentHandler}>{doc.name}</li>
           ))}
         
       </p>

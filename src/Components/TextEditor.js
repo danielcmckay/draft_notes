@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./TextEditor.css";
 
-function TextEditor() {
+function TextEditor(props) {
   const [textContent, setTextContent] = useState("");
 
   useEffect(() => {
     populateTextContent();
-  }, []);
+  }, [props.selectedDocument.text]);
 
   const populateTextContent = () => {
-    const lsTextContent = window.localStorage.getItem("textContent");
-    setTextContent(lsTextContent);
+    setTextContent(props.selectedDocument.text)
   };
 
   const setTextContentLS = (text) => {
@@ -22,6 +21,7 @@ function TextEditor() {
     setTextContentLS(textContent);
     console.log(textContent);
   };
+  
   return (
     <div className="TextEditor">
       <div className="TextOptionsContainer">
