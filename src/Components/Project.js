@@ -14,22 +14,6 @@ function Project(props) {
     creatorId: auth.userId,
     text: "",
   });
-  const [documents, setDocuments] = useState([]);
-
-  const getDocumentsFromDb = () => {
-    let dbDocuments = [];
-    try {
-      axios
-        .get(`http://localhost:5000/documents/${props.projectId}/${auth.userId}`)
-        .then((res) => {
-          let data = res.data;
-          data.forEach((doc) => dbDocuments.push(doc));
-          setDocuments(dbDocuments)
-        })
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   const newDocumentChangeHandler = (e) => {
     setNewDocument({
@@ -41,13 +25,9 @@ function Project(props) {
     });
   };
 
-  useEffect(() => {
-    getDocumentsFromDb();
-  }, [chevron]);
 
   const chevronToggleHandler = (e) => {
     toggleChevron(!chevron);
-    getDocumentsFromDb();
   };
 
   const newDocClickHandler = (e) => {
@@ -61,8 +41,6 @@ function Project(props) {
     axios
       .post(`http://localhost:5000/documents/${props.projectId}`, newDocument)
       .catch((err) => console.log(err));
-
-    getDocumentsFromDb();
   };
 
   return (
@@ -86,7 +64,7 @@ function Project(props) {
           </form>
         )}
         {chevron &&
-          documents.map((doc) => (
+          props.documents.map((doc) => (
             <li className="DocumentTitle">{doc.name}</li>
           ))}
         

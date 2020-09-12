@@ -9,64 +9,24 @@ import Login from "./Components/Login";
 import { Route, Switch } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 import useAuth from './hooks/auth-hook';
+import useDatabase from './hooks/database-hook';
+import DatabaseContext from "./context/DatabaseContext";
+
 
 
 const App = () => {
   const [loginStatus, setLoginStatus] = useState(false);
-  const [projects, setProjects] = useState([]);
+  const {projects, getProjects, addProjects} = useDatabase();
   const {userId, login, logout} = useAuth();
 
-  const newProjectHandler = (project) => {
-    addProjectToDb(project);
+  const newProjectHandler = (project, userId) => {
+    addProjects(project, userId);
   };
 
   useEffect(() => {
-    console.log(userId)
-  })
-
-  const getProjectsFromDb = () => {
-    if (loginStatus) {
-      let dbProjects = [];
-      try {
-        axios
-          .get(`http://localhost:5000/projects/${userId}`, {userId})
-          .then((res) => {
-            setProjects(res.data)
-          })
-          .then(console.log("dbProjects = " + dbProjects));
-      } catch (error) {
-        console.log(error);
+      if (userId != null) {
+        getProjects(userId);
       }
-    }
-  };
-
-  const addProjectToDb = (name) => {
-    let newProj = {
-      name: name,
-      creatorId: userId
-    };
-
-    if (name !== "" || name !== undefined || name !== null) {
-      try {
-        axios
-          .post("http://localhost:5000/projects/new/", { newProj })
-          .then((res) => {
-            console.log(res.data);
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      alert("You must fill in a new project name!");
-    }
-    getProjectsFromDb();
-  };
-
-
-  useEffect(() => {
-    if (userId != null) {
-      getProjectsFromDb();
-    }
   }, [userId]);
 
   return (
@@ -85,13 +45,21 @@ const App = () => {
           <Login setLoginStatus={setLoginStatus}/>
         ) : (
           <>
+            <DatabaseContext.Provider
+              value={{
+                projects: projects,
+                creatorId: userId,
+                getProjects: getProjects,
+                addProjects: addProjects
+              }}>
             <NavBar />
 
             <div className="AppContainer">
-              <ProjectSidebar projects={projects} addProjectToDb={addProjectToDb}/>
+              <ProjectSidebar projects={projects} addProjects={addProjects}/>
               <TextEditor />
               <NotesSidebar />
             </div>
+            </DatabaseContext.Provider>
           </>
         )}
       </Switch>

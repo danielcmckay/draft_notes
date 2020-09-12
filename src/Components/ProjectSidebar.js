@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import {DatabaseContext} from '../context/DatabaseContext'
+import {AuthContext} from '../context/AuthContext'
 import axios from "axios";
 import "./ProjectSidebar.css";
 import Project from "./Project";
@@ -6,6 +8,10 @@ import Project from "./Project";
 function ProjectSidebar(props) {
   const [sidebarOpen, toggleSidebarOpen] = useState(true);
   const [formVal, setFormVal] = useState("");
+
+  const database = useContext(DatabaseContext)
+  const auth = useContext(AuthContext)
+
 
   const toggleHandler = (e) => {
     toggleSidebarOpen(!sidebarOpen);
@@ -18,7 +24,7 @@ function ProjectSidebar(props) {
   
   const newProjClickHandler = (e) => {
     e.preventDefault();
-    props.addProjectToDb(formVal);
+    props.addProjects(formVal, auth.userId);
   }
 
   const addNewDocument = (newDoc) => {
@@ -59,7 +65,7 @@ function ProjectSidebar(props) {
           <i className="fas fa-plus" onClick={newProjClickHandler}></i>
         </form>
         <div>
-        {props.projects.map((proj) => (
+        {database.projects.map((proj) => (
           <Project
             name={proj.name}
             documents={proj.documents}
